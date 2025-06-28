@@ -1,1 +1,3 @@
-print(1+2)
+class Driver:
+    print(1+2)
+
