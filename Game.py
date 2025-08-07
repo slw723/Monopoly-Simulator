@@ -6,13 +6,17 @@ class Game:
     board = Board()
     players = list()
 
-    def __init__(self, numPlayers):
+    def __init__(self, numPlayers):  # add default number of players
         self.numPlayers = numPlayers
 
     def createPlayers(self):
-        for player in self.numPlayers:
+        for player in range(self.numPlayers):
             self.players.append(Player(player))
 
 
-game1 = Game(5)
-print(game1.board.properties[5].name)
+testGame = Game(3)
+testGame.createPlayers()
+# print(len(testGame.players))
+testGame.players[0].move()
+testGame.players[1].move()
+print(testGame.players[0].boardPosition)

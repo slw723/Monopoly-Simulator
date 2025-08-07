@@ -7,5 +7,3 @@ class Property:
         self.name = name
         self.costToBuy = costToBuy
 
-# property1 = Property(0, "Go")
-# print(property1.index, property1.name)

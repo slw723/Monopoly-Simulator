@@ -1,8 +1,12 @@
 from Property import Property
+from CommunityChestCard import CommunityChestCard
+from ChanceCard import ChanceCard
 
 
 class Board:
     properties = list()
+    communityChest = list()
+    chance = list()
 
     properties.append(Property(0, "Go", 0))
     properties.append(Property(1, "Mediterranean Avenue", 60))
@@ -48,7 +52,41 @@ class Board:
     properties.append(Property(38, "Luxury Tax", 0))
     properties.append(Property(39, "Boardwalk", 400))
 
+    communityChest.append(CommunityChestCard(0, "Advance to Go (Collect $200)"))
+    communityChest.append(CommunityChestCard(1, "Bank error in your favor. Collect $200"))
+    communityChest.append(CommunityChestCard(2, "Doctor's fee. Pay $50"))
+    communityChest.append(CommunityChestCard(3, "From sale of stock you get $50"))
+    communityChest.append(CommunityChestCard(4, "Get Out of Jail Free"))
+    communityChest.append(CommunityChestCard(5, "Go to Jail. Go directly to jail, do not pass Go, do not collect $200"))
+    communityChest.append(CommunityChestCard(6, "Holiday fund matures. Receive $100"))
+    communityChest.append(CommunityChestCard(7, "Income tax refund. Collect $20"))
+    communityChest.append(CommunityChestCard(8, "It is your birthday. Collect $10 from every player"))
+    communityChest.append(CommunityChestCard(9, "Life insurance matures. Collect $100"))
+    communityChest.append(CommunityChestCard(10, "Pay hospital fee of $100"))
+    communityChest.append(CommunityChestCard(11, "Pay school fees of $50"))
+    communityChest.append(CommunityChestCard(12, "Receive $25 consultancy fee"))
+    communityChest.append(CommunityChestCard(13, "You are assessed for street repair. $40 per house. $115 per hotel"))
+    communityChest.append(CommunityChestCard(14, "You have won second prize in a beauty contest. Collect $10"))
+    communityChest.append(CommunityChestCard(15, "You inherit $100"))
 
-board1 = Board()
-print(board1.properties[0].name)
-print(len(board1.properties))
+    chance.append(ChanceCard(0, "Advance to Boardwalk"))
+    chance.append(ChanceCard(1, "Advance to Go (Collect $200)"))
+    chance.append(ChanceCard(2, "Advance to Illinois Avenue. If you pass Go, collect $200"))
+    chance.append(ChanceCard(3, "Advance to St. Charles Place. If you pass Go, collect $200"))
+    chance.append(ChanceCard(4, "Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, "
+                                "pay wonder twice the rental to which they are otherwise entitled"))
+    chance.append(ChanceCard(5, "Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, "
+                                "pay wonder twice the rental to which they are otherwise entitled"))
+    chance.append(ChanceCard(6, "Advance token to the nearest Utility. If unowned, you may buy it from the Bank. If "
+                                "owned, throw dice and pay owner a total of ten times amount thrown"))
+    chance.append(ChanceCard(7, "Bank pays you dividend of $50"))
+    chance.append(ChanceCard(8, "Get Out of Jail Free"))
+    chance.append(ChanceCard(9, "Go Back 3 Spaces"))
+    chance.append(ChanceCard(10, "Go to Jail. Go directly to Jail, do not pass Go, do not collect $200"))
+    chance.append(ChanceCard(11, "Make general repairs on all your property. For each house pay $25. For each hotel "
+                                 "pay $100"))
+    chance.append(ChanceCard(12, "Speeding fine $15"))
+    chance.append(ChanceCard(13, "Take a trip to Reading Railroad. If you pass Go, collect $200"))
+    chance.append(ChanceCard(14, "You have been elected Chairman of the Board. Pay each player $50"))
+    chance.append(ChanceCard(15, "Your building loan matures. Collect $150"))
+

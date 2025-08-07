@@ -1,6 +1,6 @@
 # Monopoly Simulator
 
-This is the first line of my README file
+This is the first line of my README file. 
 
 ## Board
 
@@ -42,6 +42,6 @@ This is the first line of my README file
 35. Short Line
 36. Chance
 37. Park Place
-38. Luxary Tax
+38. Luxury Tax
 39. Boardwalk
 

@@ -1,3 +1,8 @@
+from Game import Game
+
+
 class Driver:
-    print(1+2)
+    newGame = Game(4)
+    newGame.createPlayers()
+
 
