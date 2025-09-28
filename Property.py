@@ -1,10 +1,9 @@
 class Property:
-    owner = -1
-    costToBuy = 0
-
-    def __init__(self, index, name, costToBuy, isProperty):
+    def __init__(self, index, name, costToBuy, isProperty, rentCost):
         self.index = index
         self.name = name
         self.costToBuy = costToBuy
         self.isProperty = isProperty
+        self.rentCost = rentCost
+        self.owner = -1
 

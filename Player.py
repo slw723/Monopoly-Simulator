@@ -2,30 +2,41 @@ import random
 
 
 class Player:
-    money = 500  # need to verify this is correct
-    boardPosition = 0
-    properties = list()
-
     def __init__(self, index):
         self.index = index
+        self.money = 500  # need to verify this is correct
+        self.boardPosition = 0
+        self.properties = list()
+        self.active = 1
 
     def move(self):
         randInt = random.randint(1, 12)
         self.boardPosition += randInt
-        self.boardPosition = self.boardPosition % 40
-        print(f"Player {self.index} is on position {self.boardPosition}")
+        if self.boardPosition > 39:
+            self.boardPosition = self.boardPosition % 40
+            self.money += 200
+        # print(f"Player {self.index} is on position {self.boardPosition}")
 
     def buyProperty(self, cost):
         if cost > self.money:
-            print("This property too expensive!")
+            print("This property is too expensive!")  # this should never happen
         else:
             self.money -= cost
-            print(f"Player {self.index} now has ${self.money}")
+            # print(f"Player {self.index} now has ${self.money}")
 
     def addProperty(self, index):
         self.properties.append(index)
 
-    def displayProperties(self):  # issues with this! displaying same properties for every player... yikes!
-        print(f"Player {self.index} has the following properties:")
+    def payRent(self, rent):
+        self.money -= rent
+        if self.money < 0:
+            print(f"Player {self.index} is now bankrupt!")
+            self.active = 0
+
+    def getRent(self, rent):
+        self.money += rent
+
+    def displayProperties(self):
+        print(f"Player {self.index} ({self.active}) has the following properties:")
         for propertyListIndex in self.properties:
             print(f"{propertyListIndex}")
