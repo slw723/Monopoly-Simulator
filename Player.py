@@ -45,9 +45,14 @@ class Player:
     def getRent(self, rent):
         self.money += rent
 
+    def sellProperty(self, index):
+        self.properties.remove(index)
+
     def isBankrupt(self):
         if self.money <= 0:
             self.active = 0
+            for prop in self.properties:
+                self.sellProperty(prop)
             return 1
         else:
             return 0
@@ -55,3 +60,23 @@ class Player:
     def displayProperties(self):
         print(f"Player {self.index} ({self.active}) has the following properties:")
         return self.properties
+
+    def ownAllPropertyGroup(self, index):
+        if (index == 1 or index == 3) and (self.numDarkPurple == 2):
+            return 1
+        elif (index == 6 or index == 8 or index == 9) and (self.numLightBlue == 3):
+            return 1
+        elif (index == 11 or index == 13 or index == 14) and (self.numPink == 3):
+            return 1
+        elif (index == 16 or index == 18 or index == 19) and (self.numOrange == 3):
+            return 1
+        elif (index == 21 or index == 23 or index == 24) and (self.numRed == 3):
+            return 1
+        elif (index == 26 or index == 27 or index == 29) and (self.numYellow == 3):
+            return 1
+        elif (index == 31 or index == 32 or index == 34) and (self.numGreen == 3):
+            return 1
+        elif (index == 37 or index == 39) and (self.numDarkBlue == 2):
+            return 1
+        else:
+            return 0

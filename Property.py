@@ -10,3 +10,4 @@ class Property:
 
     def getName(self, index):
         return self.name
+
