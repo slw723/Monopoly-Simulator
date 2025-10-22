@@ -58,7 +58,6 @@ class Player:
             return 0
 
     def displayProperties(self):
-        print(f"Player {self.index} ({self.active}) has the following properties:")
         return self.properties
 
     def ownAllPropertyGroup(self, index):
