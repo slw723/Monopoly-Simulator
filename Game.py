@@ -126,7 +126,7 @@ class Game:
             self.players.append(Player(player))
 
     def startGame(self):
-        while self.round < 20:
+        while self.round < 50:
             if self.numActive == 1:
                 print("One player remaining. Game over!")
                 break
@@ -173,13 +173,45 @@ class Game:
     # end game summary only
     def verbosity_one(self):
         print("Game Summary")
-        print(f"  - Number of Rounds: {self.round}")
-        print(f"  - Number of Players: {self.numPlayers}")
-        print(f"  - Number of Active Players (after {self.round} rounds): {self.numActive}")
-        print(f"  - Number of Owned Properties: {self.numPropertiesOwned}")
+        print(f"  * Number of Rounds: {self.round}")
+        print(f"  * Number of Players: {self.numPlayers}")
+        print(f"  * Number of Active Players (after {self.round} rounds): {self.numActive}")
+        print(f"  * Number of Owned Properties: {self.numPropertiesOwned}")
 
     def verbosity_two(self):
-        print("Start of verbosity 2")
+        self.verbosity_one()
+        print("")
+
+        try:
+            print("Owned Property Summary")
+            print("=======================================")
+            print("| Name                     | Owner    | ")
+            print("---------------------------------------")
+            print("| Dark Purple              |          |")
+            print(f"|  * Mediterranean Avenue  | Player {self.board.properties[1].owner.index} |")
+            print(f"|  * Baltic Avenue         | Player {self.board.properties[3].owner.index} |")
+            print("---------------------------------------")
+            print("| Light Blue               |          |")
+            print(f"|  * Oriental Avenue       | Player {self.board.properties[6].owner.index} |")
+            print(f"|  * Vermont Avenue        | Player {self.board.properties[8].owner.index} |")
+            print(f"|  * Connecticut Avenue    | Player {self.board.properties[9].owner.index} |")
+            print("---------------------------------------")
+            print("| Pink                     |          |")
+            print(f"|  * St. Charles Place     | Player {self.board.properties[11].owner.index} |")
+            print(f"|  * States Avenue         | Player {self.board.properties[13].owner.index} |")
+            print(f"|  * Virginia Avenue       | Player {self.board.properties[14].owner.index} |")
+            print("---------------------------------------")
+            print("| Orange                   |          |")
+            print(f"|  * St. James Place       | Player {self.board.properties[16].owner.index} |")
+            print(f"|  * Tennessee Avenue      | Player {self.board.properties[18].owner.index} |")
+            print(f"|  * New York Avenue       | Player {self.board.properties[19].owner.index} |")
+            print("---------------------------------------")
+            print("| Red                      |          |")
+            print(f"|  * Kentucky Avenue       | Player {self.board.properties[21].owner.index} |")
+            print(f"|  * Indiana Avenue        | Player {self.board.properties[23].owner.index} |")
+            print(f"|  * Illinois Avenue       | Player {self.board.properties[24].owner.index} |")
+        except AttributeError:
+            print("Error")
 
     # round by round play of each player
     def verbosity_three(self):
