@@ -22,15 +22,22 @@ class Player:
         self.active = 1
         self.numRolls = 0
         self.jailCount = 0
+        self.inJail = 0
 
     def move(self):
         randInt1 = random.randint(1, 6)
         randInt2 = random.randint(1, 6)
         randTotal = randInt1 + randInt2
+        if self.inJail == 1 and randInt1 != randInt2 and self.jailCount < 2:
+            self.jailCount += 1
+            return randTotal
+        if self.inJail == 1 and randInt1 != randInt2 and self.jailCount == 2:
+            self.money -= 50
         if randInt1 == randInt2:
             self.numRolls += 1
             if self.numRolls == 3:
                 self.boardPosition = 10
+                self.inJail = 1
                 return randTotal
         else:
             self.numRolls = 0
