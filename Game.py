@@ -99,7 +99,8 @@ def evaluateBoardPosition(currentProperty, player, roll, verbosity):
         player.payRent(cost)
         currentProperty.owner.getRent(cost)
         if verbosity == 3:
-            print(f"  Player {player.index} ({player.money}, {currentProperty.name}) paid Player {currentProperty.owner.index} ${cost}")
+            print(
+                f"  Player {player.index} ({player.money}, {currentProperty.name}) paid Player {currentProperty.owner.index} ${cost}")
 
     else:
         if verbosity == 3:
@@ -125,6 +126,17 @@ class Game:
         for player in range(self.numPlayers):
             self.players.append(Player(player))
 
+    def player_roll(self, player):
+        roll = player.move()
+        currentProperty = self.board.properties[player.boardPosition]
+        evaluateBoardPosition(currentProperty, player, roll, self.verbosity)
+        if player.isBankrupt() == 1:
+            self.numActive -= 1
+            for prop in player.properties:
+                self.board.properties[prop].owner = -1
+            if self.verbosity == 3:
+                print(f"  Player {player.index} is now bankrupt!")
+
     def startGame(self):
         while self.round < 50:
             if self.numActive == 1:
@@ -138,15 +150,10 @@ class Game:
                     if self.verbosity == 3:
                         print(f"  Player {player.index} is inactive!")
                     continue
-                roll = player.move()
-                currentProperty = self.board.properties[player.boardPosition]
-                evaluateBoardPosition(currentProperty, player, roll, self.verbosity)
-                if player.isBankrupt() == 1:
-                    self.numActive -= 1
-                    for prop in player.properties:
-                        self.board.properties[prop].owner = -1
-                    if self.verbosity == 3:
-                        print(f"  Player {player.index} is now bankrupt!")
+                player.numRolls = 0
+                self.player_roll(player)
+                while player.numRolls > 0:
+                    self.player_roll(player)
             self.round += 1
             if self.verbosity == 3:
                 print("")
@@ -182,36 +189,136 @@ class Game:
         self.verbosity_one()
         print("")
 
+        print("Owned Property Summary")
+        print("=========================================")
+        print("| Name                      | Owner     | ")
+        print("-----------------------------------------")
+        print("| Dark Purple               |           |")
         try:
-            print("Owned Property Summary")
-            print("=======================================")
-            print("| Name                     | Owner    | ")
-            print("---------------------------------------")
-            print("| Dark Purple              |          |")
-            print(f"|  * Mediterranean Avenue  | Player {self.board.properties[1].owner.index} |")
-            print(f"|  * Baltic Avenue         | Player {self.board.properties[3].owner.index} |")
-            print("---------------------------------------")
-            print("| Light Blue               |          |")
-            print(f"|  * Oriental Avenue       | Player {self.board.properties[6].owner.index} |")
-            print(f"|  * Vermont Avenue        | Player {self.board.properties[8].owner.index} |")
-            print(f"|  * Connecticut Avenue    | Player {self.board.properties[9].owner.index} |")
-            print("---------------------------------------")
-            print("| Pink                     |          |")
-            print(f"|  * St. Charles Place     | Player {self.board.properties[11].owner.index} |")
-            print(f"|  * States Avenue         | Player {self.board.properties[13].owner.index} |")
-            print(f"|  * Virginia Avenue       | Player {self.board.properties[14].owner.index} |")
-            print("---------------------------------------")
-            print("| Orange                   |          |")
-            print(f"|  * St. James Place       | Player {self.board.properties[16].owner.index} |")
-            print(f"|  * Tennessee Avenue      | Player {self.board.properties[18].owner.index} |")
-            print(f"|  * New York Avenue       | Player {self.board.properties[19].owner.index} |")
-            print("---------------------------------------")
-            print("| Red                      |          |")
-            print(f"|  * Kentucky Avenue       | Player {self.board.properties[21].owner.index} |")
-            print(f"|  * Indiana Avenue        | Player {self.board.properties[23].owner.index} |")
-            print(f"|  * Illinois Avenue       | Player {self.board.properties[24].owner.index} |")
+            print(f"|  * Mediterranean Avenue   | Player {self.board.properties[1].owner.index}  |")
         except AttributeError:
-            print("Error")
+            print(f"|  * Mediterranean Avenue   | Not Owned |")
+
+        try:
+            print(f"|  * Baltic Avenue          | Player {self.board.properties[3].owner.index}  |")
+        except AttributeError:
+            print(f"|  * Baltic Avenue          | Not Owned |")
+
+        print("-----------------------------------------")
+        print("| Light Blue                |           |")
+        try:
+            print(f"|  * Oriental Avenue        | Player {self.board.properties[6].owner.index}  |")
+        except AttributeError:
+            print(f"|  * Oriental Avenue        | Not Owned |")
+
+        try:
+            print(f"|  * Vermont Avenue         | Player {self.board.properties[8].owner.index}  |")
+        except AttributeError:
+            print(f"|  * Vermont Avenue         | Not Owned |")
+
+        try:
+            print(f"|  * Connecticut Avenue     | Player {self.board.properties[9].owner.index}  |")
+        except AttributeError:
+            print(f"|  * Connecticut Avenue     | Not Owned |")
+
+        print("-----------------------------------------")
+        print("| Pink                      |           |")
+        try:
+            print(f"|  * St. Charles Place      | Player {self.board.properties[11].owner.index}  |")
+        except AttributeError:
+            print(f"|  * St. Charles Place      | Not Owned |")
+
+        try:
+            print(f"|  * States Avenue          | Player {self.board.properties[13].owner.index}  |")
+        except AttributeError:
+            print(f"|  * States Avenue          | Not Owned |")
+
+        try:
+            print(f"|  * Virginia Avenue        | Player {self.board.properties[14].owner.index}  |")
+        except AttributeError:
+            print(f"|  * Virginia Avenue        | Not Owned |")
+
+        print("-----------------------------------------")
+        print("| Orange                    |           |")
+        try:
+            print(f"|  * St. James Place        | Player {self.board.properties[16].owner.index}  |")
+        except AttributeError:
+            print(f"|  * St. James Place        | Not Owned |")
+
+        try:
+            print(f"|  * Tennessee Avenue       | Player {self.board.properties[18].owner.index}  |")
+        except AttributeError:
+            print(f"|  * Tennessee Avenue       | Not Owned |")
+
+        try:
+            print(f"|  * New York Avenue        | Player {self.board.properties[19].owner.index}  |")
+        except AttributeError:
+            print(f"|  * New York Avenue        | Not Owned |")
+
+        print("-----------------------------------------")
+        print("| Red                       |           |")
+        try:
+            print(f"|  * Kentucky Avenue        | Player {self.board.properties[21].owner.index}  |")
+        except AttributeError:
+            print(f"|  * Kentucky Avenue        | Not Owned |")
+
+        try:
+            print(f"|  * Indiana Avenue         | Player {self.board.properties[23].owner.index}  |")
+        except AttributeError:
+            print(f"|  * Indiana Avenue         | Not Owned |")
+
+        try:
+            print(f"|  * Illinois Avenue        | Player {self.board.properties[24].owner.index}  |")
+        except AttributeError:
+            print(f"|  * Illinois Avenue        | Not Owned |")
+
+        print("-----------------------------------------")
+        print("| Yellow                    |           |")
+        try:
+            print(f"|   * Atlantic Avenue       | Player {self.board.properties[26].owner.index}  |")
+        except AttributeError:
+            print(f"|   * Atlantic Avenue       | Not Owned |")
+
+        try:
+            print(f"|   * Ventnor Avenue        | Player {self.board.properties[27].owner.index}  |")
+        except AttributeError:
+            print(f"|   * Ventnor Avenue        | Not Owned |")
+
+        try:
+            print(f"|   * Marvin Gardens        | Player {self.board.properties[29].owner.index}  |")
+        except AttributeError:
+            print(f"|   * Marvin Gardens        | Not Owned |")
+
+        print("-----------------------------------------")
+        print("| Green                     |           |")
+        try:
+            print(f"|   * Pacific Avenue        | Player {self.board.properties[31].owner.index}  |")
+        except AttributeError:
+            print(f"|   * Pacific Avenue        | Not Owned |")
+
+        try:
+            print(f"|   * North Carolina Avenue | Player {self.board.properties[32].owner.index}  |")
+        except AttributeError:
+            print(f"|   * North Carolina Avenue | Not Owned |")
+
+        try:
+            print(f"|   * Pennsylvania Avenue   | Player {self.board.properties[34].owner.index}  |")
+        except AttributeError:
+            print(f"|   * Pennsylvania Avenue   | Not Owned |")
+
+        print("-----------------------------------------")
+        print("| Dark Blue                 |           |")
+        try:
+            print(f"|   * Park Place            | Player {self.board.properties[37].owner.index}  |")
+        except AttributeError:
+            print(f"|   * Park Place            | Not Owned |")
+
+        try:
+            print(f"|   * Boardwalk             | Player {self.board.properties[39].owner.index}  |")
+        except AttributeError:
+            print(f"|   * Boardwalk             | Not Owned |")
+
+        print("=========================================")
 
     # round by round play of each player
     def verbosity_three(self):
