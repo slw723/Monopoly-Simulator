@@ -1,3 +1,4 @@
+import random
 import sys
 
 from Board import Board
@@ -27,7 +28,7 @@ def updatePlayerPropertyGroups(player, property):
         player.numStations += 1
 
 
-def evaluateBoardPosition(currentProperty, player, roll, verbosity):
+def evaluateBoardPosition(currentProperty, player, roll, verbosity, board):
     # if current position is go to jail, move to jail
     if currentProperty.index == 30:
         player.boardPosition = 10
@@ -57,6 +58,9 @@ def evaluateBoardPosition(currentProperty, player, roll, verbosity):
         if verbosity == 3:
             print(f"  Player {player.index} ({player.money}, {currentProperty.name})")
         # continue  # add stuff for cards here
+        if currentProperty.group == "Community Chest":
+            card = random.randint(0, 15)  # needs to be from random order, each card only picked once
+            board.communityChest[card].getCommunityChestAction(player)
 
     # if current position is not owned and player can afford the property
     elif (currentProperty.owner == -1 and
@@ -129,7 +133,7 @@ class Game:
     def player_roll(self, player):
         roll = player.move()
         currentProperty = self.board.properties[player.boardPosition]
-        evaluateBoardPosition(currentProperty, player, roll, self.verbosity)
+        evaluateBoardPosition(currentProperty, player, roll, self.verbosity, self.board)
         if player.isBankrupt() == 1:
             self.numActive -= 1
             for prop in player.properties:

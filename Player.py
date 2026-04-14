@@ -23,6 +23,7 @@ class Player:
         self.numRolls = 0
         self.jailCount = 0
         self.inJail = 0
+        self.getOutOfJail = 0
 
     def move(self):
         randInt1 = random.randint(1, 6)
